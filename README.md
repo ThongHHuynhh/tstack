@@ -1,5 +1,7 @@
 # tstack
 
+> tstack is a fork of the pstack plugin from [cursor/plugins](https://github.com/cursor/plugins/tree/main), by Lauren Tan ([poteto](https://x.com/poteto)). this fork adds codex support next to claude code and cursor. the intro below is the original author's. see [changes from upstream](#changes-from-upstream).
+
 i'm [poteto](https://x.com/poteto). i'm not a president or ceo, but i've worked with millions of lines of code at Meta, Netflix, and Cursor. i'm also on the react core team where i help build and maintain react compiler.
 
 there's a growing sense that ai writes too much slop code. i agree. i don't want to ship like a team of twenty slop artists. throughput without quality is not a goal i aspire to. if you want to go fast, go deep first. 
@@ -27,9 +29,16 @@ in claude code:
 
 claude code leaves auto-update off for third-party marketplaces, so tstack stays on the version you installed. to turn it on, run `/plugin`, open the **marketplaces** tab, select `tstack-local`, and choose **enable auto-update**. to update once by hand, run `claude plugin update tstack@tstack-local`.
 
-claude code prefixes plugin commands and agents, so `/t-mode` is `/tstack:t-mode`. the [claude code adapter](./docs/harness/claude-code.md) maps every other cursor name. in claude code, `/tstack:setup-tstack` writes your model choices to `~/.claude/rules/tstack-models.md`, and a step that needs a cursor-only feature, such as bugbot or automations, is skipped with a one-line note.
+in codex:
 
-claude code installs a generated copy of tstack, including this readme and the guide, from [`harness/tstack/`](https://github.com/cursor/plugins/tree/main/harness/pstack) at the repository root. after you change tstack, run `node scripts/generate-tstack-harness-trees.mjs` from the repository root and commit the result. ci fails while the generated copy is out of date.
+```bash
+codex plugin marketplace add ThongHHuynhh/tstack
+codex plugin add tstack@tstack-local
+```
+
+to pull a newer version into codex, run `codex plugin marketplace upgrade tstack-local`.
+
+claude code prefixes plugin commands and agents, so `/t-mode` is `/tstack:t-mode`. in codex, mention a skill with `$`, such as `$tstack:t-mode`. the [adapter](./docs/harness/claude-code.md) maps every other cursor name for claude code and codex. in codex, `$tstack:setup-tstack` writes your model choices to `~/.codex/tstack-models.md`. in claude code, `/tstack:setup-tstack` writes your model choices to `~/.claude/rules/tstack-models.md`, and a step that needs a cursor-only feature, such as bugbot or automations, is skipped with a one-line note.
 
 ## get started
 
@@ -283,6 +292,21 @@ when a default changes, a rule written before the change still pins the old defa
 tstack also ships a dormant [benny automation pack](./automations/benny/). benny triages slack issue reports, then reproduces and fixes confirmed bugs with real ui evidence. its files are not registered as slash skills.
 
 to set it up, point cursor at [`FOR_AGENTS.md`](./automations/benny/FOR_AGENTS.md). setup copies the pack into the target repository at `.cursor/automations/benny/`, enables tstack there for shared skills, and keeps user configuration outside the copied pack. benny runs on cursor automations, so it is cursor-only.
+
+## changes from upstream
+
+compared with pstack in [cursor/plugins](https://github.com/cursor/plugins/tree/main) at commit `aaeb0ea`:
+
+- renamed: pstack is tstack, `poteto-mode` is `t-mode`, `setup-pstack` is `setup-tstack`.
+- codex support: a codex column in the [adapter](./docs/harness/claude-code.md), a codex marketplace at `.agents/plugins/marketplace.json`, and an `agents/openai.yaml` in each skill that claude code runs only when you type it, so codex does the same.
+- bundled from cursor-team-kit: `deslop`, `control-ui`, and `control-cli`, which `t-mode` calls. `control-ui` drops one mention of `verify-this`, a team-kit skill tstack doesn't ship.
+- checks from the upstream repository root, adapted to this layout. run them before you commit:
+
+```bash
+node scripts/check-skills.mjs
+node scripts/check-docs.mjs
+node scripts/validate-plugins.mjs
+```
 
 ## license
 
