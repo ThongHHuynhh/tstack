@@ -145,6 +145,9 @@ to keep [`/t-mode`](./skills/t-mode/SKILL.md) on across turns, pick it from the 
 | [`/teach`](./skills/teach/SKILL.md) | you want to actually understand a change or subsystem, not just have it summarized. runs how + why and weaves one plain explanation, built up diagram by diagram. |
 | [`/tdd`](./skills/tdd/SKILL.md) | you're fixing a bug and there's a cheap local test path. write the failing test first, then the fix. |
 | [`/benchmark-checklist`](./skills/benchmark-checklist/SKILL.md) | you ran a benchmark or measured a speedup or regression. vets the number (limiter, tuning, errors, repeat runs, end-to-end relevance) before you report or act on it. |
+| [`/deslop`](./skills/deslop/SKILL.md) | you want ai slop stripped from the branch diff before commit: narrating comments, odd guards, `any` casts, deep nesting. from cursor-team-kit. |
+| [`/control-ui`](./skills/control-ui/SKILL.md) | you need to drive a web, ide, or electron ui locally for proof: screenshots, accessibility snapshots, perf profiles. from cursor-team-kit. |
+| [`/control-cli`](./skills/control-cli/SKILL.md) | you need to drive a cli or tui with a repeatable local harness: prompt flows, hangs, startup and memory checks. from cursor-team-kit. |
 | [`/no-comments`](./skills/no-comments/SKILL.md) | strip comments before review; spawns Comment Sicko, fixes accepted findings, offers encodings for claimed constraints. |
 | [`/typescript-best-practices`](./skills/typescript-best-practices/SKILL.md) | you're reading or editing typescript. grounds the type-system-discipline principle in syntax. |
 | [`/figure-it-out`](./skills/figure-it-out/SKILL.md) | no bundled playbook fits. designs a rigorous, auditable playbook for the task. |
@@ -257,13 +260,9 @@ twenty-four short skills, one principle each. `t-mode` indexes them inline and r
 
 ## not shipped here
 
-a few things `t-mode` references but doesn't bundle:
+a few things `t-mode` mentions but doesn't bundle:
 
-- `/deslop` and the `deslop` skill ship in the `cursor-team-kit` plugin.
-- `control-cli` (for CLIs and TUIs) and `control-ui` (for browser, Electron, web) ship in `cursor-team-kit` too.
 - `/create-skill` is a cursor built-in. cursor also ships a built-in `/autopilot` that watches a pr. inside `t-mode`, pr-status requests go to the [babysit playbook](./skills/t-mode/playbooks/babysit.md) instead.
-
-install `cursor-team-kit` alongside tstack if you want the full set.
 
 ## why are there no planning skills?
 
