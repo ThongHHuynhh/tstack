@@ -1,0 +1,16 @@
+{
+  "name": "tstack-local",
+  "owner": {
+    "name": "Thong Huynh"
+  },
+  "plugins": [
+    {
+      "name": "tstack",
+      "source": "./",
+      "description": "Personal engineering workflow stack, derived from pstack."
+    }
+  ],
+  "metadata": {
+    "description": "Personal engineering workflow skills for Claude Code."
+  }
+}
