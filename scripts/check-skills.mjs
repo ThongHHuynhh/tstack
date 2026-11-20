@@ -89,7 +89,8 @@ for (const skill of skills) {
     } else problems.push(`skills/${skill} is manual-only but agents/openai.yaml does not turn off Codex implicit use`);
   } else if (!manualOnly && current !== undefined) {
     if (FIX) {
-      rmSync(join(SKILLS, skill, "agents"), { recursive: true });
+      rmSync(policy);
+      if (readdirSync(dirname(policy)).length === 0) rmSync(dirname(policy), { recursive: true });
       fixed.push(`removed skills/${skill}/agents/openai.yaml`);
     } else problems.push(`skills/${skill} can be invoked by the model but has agents/openai.yaml`);
   }

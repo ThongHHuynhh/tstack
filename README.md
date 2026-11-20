@@ -299,7 +299,7 @@ compared with pstack in [cursor/plugins](https://github.com/cursor/plugins/tree/
 
 - renamed: pstack is tstack, `poteto-mode` is `t-mode`, `setup-pstack` is `setup-tstack`.
 - codex support: a codex column in the [adapter](./docs/harness/claude-code.md), a codex marketplace at `.agents/plugins/marketplace.json`, and an `agents/openai.yaml` in each skill that claude code runs only when you type it, so codex does the same.
-- bundled from cursor-team-kit: `deslop`, `control-ui`, and `control-cli`, which `t-mode` calls. `control-ui` drops one mention of `verify-this`, a team-kit skill tstack doesn't ship.
+- bundled from cursor-team-kit: `deslop`, `control-ui`, and `control-cli`, which `t-mode` calls.
 - checks from the upstream repository root, adapted to this layout. run them before you commit:
 
 ```bash

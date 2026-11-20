@@ -54,9 +54,13 @@ try {
   console.log("note: ajv not installed, skipped the .cursor-plugin schema check (npm install --no-save ajv ajv-formats)");
 }
 
+// The install commands in README.md and the guide name the plugin as `tstack@tstack-local`.
+const MARKETPLACE_NAME = "tstack-local";
+
 for (const path of MARKETPLACES) {
   const marketplace = load(path);
   if (!marketplace) continue;
+  if (marketplace.name !== MARKETPLACE_NAME) fail(`${path}: name ${JSON.stringify(marketplace.name)} is not ${MARKETPLACE_NAME}`);
   const entry = (marketplace.plugins ?? []).find((plugin) => plugin.name === name);
   if (!entry) {
     fail(`${path}: no entry for plugin ${JSON.stringify(name)}`);
@@ -66,6 +70,9 @@ for (const path of MARKETPLACES) {
   // Both Claude Code and Codex resolve a local source against the marketplace root, the folder that holds .claude-plugin/ or .agents/.
   if (!source?.startsWith("./")) fail(`${path}: source ${JSON.stringify(source)} must start with ./`);
   else if (!existsSync(join(resolve(ROOT, source), "plugin.json"))) fail(`${path}: source ${source} has no plugin.json`);
+  if (typeof entry.source === "object" && entry.source.source !== "local") {
+    fail(`${path}: source.source ${JSON.stringify(entry.source.source)} is not "local"`);
+  }
   if (path.startsWith(".agents/")) {
     for (const field of ["policy.installation", "policy.authentication", "category"]) {
       if (field.split(".").reduce((value, key) => value?.[key], entry) === undefined) fail(`${path}: entry has no ${field}`);
