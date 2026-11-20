@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Recall
 
-In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in tstack skills to Claude Code.
+In Claude Code or Codex, read [the adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in tstack skills to Claude Code and Codex.
 
 
 **Before you start or resume work, you rebuild the user's recent working context and hand back a tight capsule of where things stand now and what to do next.**

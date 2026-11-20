@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Arena
 
-In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in tstack skills to Claude Code.
+In Claude Code or Codex, read [the adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in tstack skills to Claude Code and Codex.
 
 
 Open a todolist with one entry per phase (Frame, Fan out, Cross-judge, Pick, Graft, Verify) before launching anything.

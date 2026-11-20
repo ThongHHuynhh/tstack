@@ -8,7 +8,7 @@ color: yellow
 
 # T mode
 
-In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in tstack skills to Claude Code.
+In Claude Code or Codex, read [the adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in tstack skills to Claude Code and Codex.
 
 
 Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's absolute path in every `t-agent` prompt.

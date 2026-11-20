@@ -5,7 +5,7 @@ description: Configure which models tstack uses per role and at what reasoning b
 
 # Setup tstack
 
-In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in tstack skills to Claude Code.
+In Claude Code or Codex, read [the adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in tstack skills to Claude Code and Codex.
 
 
 Write `~/.cursor/rules/tstack-models.mdc`, an always-applied rule that sets tstack's model per role.

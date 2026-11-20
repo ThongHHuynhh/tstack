@@ -6,14 +6,14 @@ disable-model-invocation: true
 
 # T help
 
-In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in tstack skills to Claude Code.
+In Claude Code or Codex, read [the adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in tstack skills to Claude Code and Codex.
 
 
 Answer the user's question about tstack, hand them a prompt they can send, and link the file the answer came from. For a help question, don't start the work. The user asked how, and a tstack run spends real tokens, so let them send the prompt.
 
 A message that asks for work, such as "use tstack to fix this bug", is not a help question. Read [`t-mode`](../t-mode/SKILL.md), do the work under it, and mention once that a Custom Mode keeps it on.
 
-This file maps questions to the skills and guide pages that hold the answers. Those files own the details. Read the file you route to before you quote it, and trust it when it disagrees with this map. The links here point into the installed plugin, which the user may not be able to open, so give the user the file's public copy: `https://github.com/cursor/plugins/blob/main/pstack/` followed by its path.
+This file maps questions to the skills and guide pages that hold the answers. Those files own the details. Read the file you route to before you quote it, and trust it when it disagrees with this map. The links here point into the installed plugin, which the user may not be able to open, so give the user the file's public copy: `https://github.com/ThongHHuynhh/tstack/blob/main/` followed by its path.
 
 ## Find out what they need
 
@@ -46,7 +46,7 @@ Installing changes nothing until the user invokes a skill. Only `/setup-tstack` 
 
 If cost is the worry, say where the tokens go and how to spend fewer. tstack spends extra tokens on subagents and review panels. Rerun `/setup-tstack` and pick a smaller budget or cheaper models. A role set to `auto` or `inherit-parent` runs on the chat's model, which saves tokens when the chat runs on Auto or a cheaper model. A shorter panel list runs fewer subagents, one for each entry. Save `/t-mode` for work that needs rigor.
 
-tstack is built for Cursor, and it also installs in Claude Code with `/plugin marketplace add cursor/plugins`, then `/plugin install tstack@cursor-plugins`. There, each command takes a `tstack:` prefix, such as `/tstack:t-mode`. The [Claude Code adapter](../../docs/harness/claude-code.md) maps the Cursor names, and a step that needs a Cursor-only feature, such as Bugbot or Automations, is skipped with a one-line note.
+tstack is built for Cursor, and it also installs in Claude Code with `/plugin marketplace add ThongHHuynhh/tstack`, then `/plugin install tstack@tstack-local`, and in Codex with `codex plugin marketplace add ThongHHuynhh/tstack`, then `codex plugin add tstack@tstack-local`. There, each command takes a `tstack:` prefix, such as `/tstack:t-mode` in Claude Code or `$tstack:t-mode` in Codex. The [adapter](../../docs/harness/claude-code.md) maps the Cursor names, and a step that needs a Cursor-only feature, such as Bugbot or Automations, is skipped with a one-line note.
 
 Other tools can read the skills, because they use the Agent Skills format. But most workflow skills, including `/t-mode`, `/how`, and `/teach`, spawn Cursor subagents, some with per-role models, and Custom Modes and `/loop` are Cursor features, so those parts may not work there.
 
