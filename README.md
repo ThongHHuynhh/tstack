@@ -1,5 +1,7 @@
 # tstack
 
+> tstack is a fork of the pstack plugin from [cursor/plugins](https://github.com/cursor/plugins/tree/main), by Lauren Tan ([poteto](https://x.com/poteto)). this fork adds codex support next to claude code and cursor. the intro below is the original author's. see [changes from upstream](#changes-from-upstream).
+
 i'm [poteto](https://x.com/poteto). i'm not a president or ceo, but i've worked with millions of lines of code at Meta, Netflix, and Cursor. i'm also on the react core team where i help build and maintain react compiler.
 
 there's a growing sense that ai writes too much slop code. i agree. i don't want to ship like a team of twenty slop artists. throughput without quality is not a goal i aspire to. if you want to go fast, go deep first. 
@@ -27,9 +29,16 @@ in claude code:
 
 claude code leaves auto-update off for third-party marketplaces, so tstack stays on the version you installed. to turn it on, run `/plugin`, open the **marketplaces** tab, select `tstack-local`, and choose **enable auto-update**. to update once by hand, run `claude plugin update tstack@tstack-local`.
 
-claude code prefixes plugin commands and agents, so `/t-mode` is `/tstack:t-mode`. the [claude code adapter](./docs/harness/claude-code.md) maps every other cursor name. in claude code, `/tstack:setup-tstack` writes your model choices to `~/.claude/rules/tstack-models.md`, and a step that needs a cursor-only feature, such as bugbot or automations, is skipped with a one-line note.
+in codex:
 
-claude code installs a generated copy of tstack, including this readme and the guide, from [`harness/tstack/`](https://github.com/cursor/plugins/tree/main/harness/pstack) at the repository root. after you change tstack, run `node scripts/generate-tstack-harness-trees.mjs` from the repository root and commit the result. ci fails while the generated copy is out of date.
+```bash
+codex plugin marketplace add ThongHHuynhh/tstack
+codex plugin add tstack@tstack-local
+```
+
+to pull a newer version into codex, run `codex plugin marketplace upgrade tstack-local`.
+
+claude code prefixes plugin commands and agents, so `/t-mode` is `/tstack:t-mode`. in codex, mention a skill with `$`, such as `$tstack:t-mode`. the [adapter](./docs/harness/claude-code.md) maps every other cursor name for claude code and codex. in codex, `$tstack:setup-tstack` writes your model choices to `~/.codex/tstack-models.md`. in claude code, `/tstack:setup-tstack` writes your model choices to `~/.claude/rules/tstack-models.md`, and a step that needs a cursor-only feature, such as bugbot or automations, is skipped with a one-line note.
 
 ## get started
 
@@ -145,6 +154,9 @@ to keep [`/t-mode`](./skills/t-mode/SKILL.md) on across turns, pick it from the 
 | [`/teach`](./skills/teach/SKILL.md) | you want to actually understand a change or subsystem, not just have it summarized. runs how + why and weaves one plain explanation, built up diagram by diagram. |
 | [`/tdd`](./skills/tdd/SKILL.md) | you're fixing a bug and there's a cheap local test path. write the failing test first, then the fix. |
 | [`/benchmark-checklist`](./skills/benchmark-checklist/SKILL.md) | you ran a benchmark or measured a speedup or regression. vets the number (limiter, tuning, errors, repeat runs, end-to-end relevance) before you report or act on it. |
+| [`/deslop`](./skills/deslop/SKILL.md) | you want ai slop stripped from the branch diff before commit: narrating comments, odd guards, `any` casts, deep nesting. from cursor-team-kit. |
+| [`/control-ui`](./skills/control-ui/SKILL.md) | you need to drive a web, ide, or electron ui locally for proof: screenshots, accessibility snapshots, perf profiles. from cursor-team-kit. |
+| [`/control-cli`](./skills/control-cli/SKILL.md) | you need to drive a cli or tui with a repeatable local harness: prompt flows, hangs, startup and memory checks. from cursor-team-kit. |
 | [`/no-comments`](./skills/no-comments/SKILL.md) | strip comments before review; spawns Comment Sicko, fixes accepted findings, offers encodings for claimed constraints. |
 | [`/typescript-best-practices`](./skills/typescript-best-practices/SKILL.md) | you're reading or editing typescript. grounds the type-system-discipline principle in syntax. |
 | [`/figure-it-out`](./skills/figure-it-out/SKILL.md) | no bundled playbook fits. designs a rigorous, auditable playbook for the task. |
@@ -257,13 +269,9 @@ twenty-four short skills, one principle each. `t-mode` indexes them inline and r
 
 ## not shipped here
 
-a few things `t-mode` references but doesn't bundle:
+a few things `t-mode` mentions but doesn't bundle:
 
-- `/deslop` and the `deslop` skill ship in the `cursor-team-kit` plugin.
-- `control-cli` (for CLIs and TUIs) and `control-ui` (for browser, Electron, web) ship in `cursor-team-kit` too.
 - `/create-skill` is a cursor built-in. cursor also ships a built-in `/autopilot` that watches a pr. inside `t-mode`, pr-status requests go to the [babysit playbook](./skills/t-mode/playbooks/babysit.md) instead.
-
-install `cursor-team-kit` alongside tstack if you want the full set.
 
 ## why are there no planning skills?
 
@@ -284,6 +292,21 @@ when a default changes, a rule written before the change still pins the old defa
 tstack also ships a dormant [benny automation pack](./automations/benny/). benny triages slack issue reports, then reproduces and fixes confirmed bugs with real ui evidence. its files are not registered as slash skills.
 
 to set it up, point cursor at [`FOR_AGENTS.md`](./automations/benny/FOR_AGENTS.md). setup copies the pack into the target repository at `.cursor/automations/benny/`, enables tstack there for shared skills, and keeps user configuration outside the copied pack. benny runs on cursor automations, so it is cursor-only.
+
+## changes from upstream
+
+compared with pstack in [cursor/plugins](https://github.com/cursor/plugins/tree/main) at commit `aaeb0ea`:
+
+- renamed: pstack is tstack, `poteto-mode` is `t-mode`, `setup-pstack` is `setup-tstack`.
+- codex support: a codex column in the [adapter](./docs/harness/claude-code.md), a codex marketplace at `.agents/plugins/marketplace.json`, and an `agents/openai.yaml` in each skill that claude code runs only when you type it, so codex does the same.
+- bundled from cursor-team-kit: `deslop`, `control-ui`, and `control-cli`, which `t-mode` calls.
+- checks from the upstream repository root, adapted to this layout. run them before you commit:
+
+```bash
+node scripts/check-skills.mjs
+node scripts/check-docs.mjs
+node scripts/validate-plugins.mjs
+```
 
 ## license
 
